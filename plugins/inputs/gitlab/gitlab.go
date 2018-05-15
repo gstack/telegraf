@@ -13,14 +13,15 @@ import (
 
 const (
 	measurement  = "gitlab"
-	description  = "Read metrics exposed by fluentd in_monitor plugin"
+	description  = "Read metrics based on data exposed by the Gitlab API"
 	sampleConfig = `
-  ## This plugin reads information exposed by fluentd (using /api/plugins.json endpoint).
+  ## This plugin reads information exposed by the Gitlab API (using /api/plugins.json endpoint).
   ##
   ## Endpoint:
   ## - only one URI is allowed
-  ## - https is not supported
   endpoint = "https://gitlab.com"
+  ## Token:
+  ## - Personal access token in Gitlab (API scope required)
   token = "abcdefgh1234"
 `
 )

@@ -12,7 +12,6 @@ import (
 )
 
 const (
-	measurement  = "gitlab"
 	description  = "Read metrics based on data exposed by the Gitlab API"
 	sampleConfig = `
   ## This plugin reads information exposed by the Gitlab API (using /api/plugins.json endpoint).

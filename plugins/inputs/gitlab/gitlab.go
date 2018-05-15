@@ -110,12 +110,14 @@ func (h *Gitlab) fetchMergeRequests(acc telegraf.Accumulator) {
 			}
 
 			tmpTags := map[string]string{
-				"merge_status": mr.MergeStatus,
-				"author":       mr.Author.Name,
-				"username":     mr.Author.Username,
-				"assignee":     mr.Assignee.Name,
-				"project":      h.projects[mr.ProjectID],
-				"state":        mr.State,
+				"merge_status":   mr.MergeStatus,
+				"author":         mr.Author.Name,
+				"username":       mr.Author.Username,
+				"assignee":       mr.Assignee.Name,
+				"project":        h.projects[mr.ProjectID],
+				"source_project": h.projects[mr.SourceProjectID],
+				"target_project": h.projects[mr.TargetProjectID],
+				"state":          mr.State,
 			}
 			acc.AddFields("merge_requests", tmpFields, tmpTags, *mr.CreatedAt)
 		}

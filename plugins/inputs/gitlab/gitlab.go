@@ -27,6 +27,7 @@ type Gitlab struct {
 	client *gitlab.Client
 	Token string
 	Endpoint string
+	currentPage int
 }
 
 // Description - display description
@@ -71,11 +72,10 @@ func (h *Gitlab) Gather(acc telegraf.Accumulator) error {
 		return fmt.Errorf("http status ok not met")
 	}
 
-	cp := 0
 getmr:
 	mrs, rs, err := h.client.MergeRequests.ListMergeRequests(&gitlab.ListMergeRequestsOptions{
 		Scope: gitlab.String("all"),
-		ListOptions: gitlab.ListOptions{PerPage: 100, Page: cp},
+		ListOptions: gitlab.ListOptions{PerPage: 100, Page: h.currentPage},
 	})
 
 	if err != nil {
@@ -103,7 +103,7 @@ getmr:
 	}
 	rs.Body.Close()
 	if len(mrs) == 100 {
-		cp += 1
+		h.currentPage += 1
 		goto getmr
 	}
 
